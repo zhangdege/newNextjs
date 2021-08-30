@@ -1,0 +1,12 @@
+mutation UserLogin($phone: String!, $password: String!) {
+	userLogin(userData: { phone: $phone, password: $password }) {
+		errors {
+			field
+			message
+		}
+		user {
+			id
+			phone
+		}
+	}
+}

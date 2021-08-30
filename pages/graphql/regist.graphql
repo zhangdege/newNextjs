@@ -1,0 +1,7 @@
+mutation CreateUser($phone: String!, $password: String!) {
+	createUser(ruserData: { phone: $phone, password: $password }) {
+		id
+		createdAt
+		phone
+	}
+}

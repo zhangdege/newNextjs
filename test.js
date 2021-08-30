@@ -1,0 +1,5 @@
+const token = new Array(6)
+	.fill(null)
+	.map(() => Math.floor(Math.random() * 9 + 1))
+	.join('')
+console.log(token)
