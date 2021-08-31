@@ -1,0 +1,12 @@
+mutation Sendtoken($phone: String!) {
+	sendToken(phone: $phone) {
+		errors {
+			field
+			message
+		}
+		user {
+			phone
+			id
+		}
+	}
+}

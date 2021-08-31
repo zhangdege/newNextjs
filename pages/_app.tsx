@@ -8,6 +8,7 @@ import '../styles/globals.css'
  */
 const client = createClient({
 	url: graphqlURL,
+	fetchOptions: { credentials: 'include' as const },
 })
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
