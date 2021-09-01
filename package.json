@@ -13,10 +13,12 @@
 		"@chakra-ui/react": "^1.6.6",
 		"@emotion/react": "^11",
 		"@emotion/styled": "^11",
+		"@urql/exchange-graphcache": "^4.3.3",
 		"formik": "^2.2.9",
 		"framer-motion": "^4",
 		"graphql": "^15.5.1",
 		"next": "11.1.0",
+		"next-urql": "^3.2.1",
 		"react": "17.0.2",
 		"react-dom": "17.0.2",
 		"urql": "^2.0.4"
@@ -27,6 +29,7 @@
 		"@graphql-codegen/typescript-operations": "2.1.2",
 		"@graphql-codegen/typescript-urql": "^3.1.2",
 		"@types/react": "17.0.19",
+		"@urql/devtools": "^2.0.3",
 		"eslint": "7.32.0",
 		"eslint-config-next": "11.1.0",
 		"typescript": "4.4.2"

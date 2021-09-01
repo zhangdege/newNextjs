@@ -1,13 +1,13 @@
 import { Box, Button, Input } from '@chakra-ui/react'
 import { useRouter } from 'next/dist/client/router'
 import React, { useRef } from 'react'
-import { useUserLoginMutation } from '../generated/generat'
+import { useUserLoginMutation } from '../../generated/generat'
 
 interface indexProps {}
 
 const index: React.FC<indexProps> = () => {
 	const phone = useRef(null)
-	const password = useRef(null)
+	const password = useRef<HTMLInputElement | any>(null)
 	const router = useRouter()
 	const [, sing_in] = useUserLoginMutation()
 	const login = async () => {
@@ -18,7 +18,7 @@ const index: React.FC<indexProps> = () => {
 		if (result.data?.userLogin.user) {
 			router.push('/')
 		} else {
-			alert(result.data?.userLogin.errors?.message)
+			alert(result.data?.userLogin.errors?.message ?? '')
 		}
 	}
 	return (

@@ -2,7 +2,7 @@ import { Button, Input, Wrap, WrapItem } from '@chakra-ui/react'
 import { Form, Formik } from 'formik'
 import { useRouter } from 'next/dist/client/router'
 import React from 'react'
-import { useCreateUserMutation } from '../generated/generat'
+import { useCreateUserMutation } from '../../generated/generat'
 interface indexProps {}
 
 const index: React.FC<indexProps> = () => {

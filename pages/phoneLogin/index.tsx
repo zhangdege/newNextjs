@@ -4,7 +4,7 @@ import React, { useRef } from 'react'
 import {
 	useSendtokenMutation,
 	useUserPhoneLoginOrregistMutation,
-} from '../generated/generat'
+} from '../../generated/generat'
 
 interface indexProps {}
 
@@ -13,12 +13,11 @@ const index: React.FC<indexProps> = () => {
 	const token = useRef(null)
 	const router = useRouter()
 	const [, code_sing_in] = useUserPhoneLoginOrregistMutation()
-	const [, getToken] = useSendtokenMutation()
+	const [data, getToken] = useSendtokenMutation()
 	const gToken = () => {
 		const phones = { phone: phone.current?.value }
-		console.log(phones)
-
 		getToken(phones)
+		console.log(data)
 	}
 	const login = async () => {
 		const user = { phone: phone.current?.value, token: token.current?.value }

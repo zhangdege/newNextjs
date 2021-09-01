@@ -145,11 +145,6 @@ export type UserLogOutMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type UserLogOutMutation = { __typename?: 'Mutation', logout: boolean };
 
-export type MeQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id: string, posts: Array<{ __typename?: 'Post', id: string, title: string }> }> };
-
 export type UserPhoneLoginOrregistMutationVariables = Exact<{
   phone: Scalars['String'];
   token: Scalars['String'];
@@ -180,6 +175,16 @@ export type UpdatePostsMutationVariables = Exact<{
 
 
 export type UpdatePostsMutation = { __typename?: 'Mutation', updatePost?: Maybe<{ __typename?: 'Post', id: string, updatedAt: string, title: string }> };
+
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', id: string, posts: Array<{ __typename?: 'Post', id: string, title: string }> }> };
+
+export type PostsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, title: string }> };
 
 
 export const CreatePostsDocument = gql`
@@ -234,21 +239,6 @@ export const UserLogOutDocument = gql`
 
 export function useUserLogOutMutation() {
   return Urql.useMutation<UserLogOutMutation, UserLogOutMutationVariables>(UserLogOutDocument);
-};
-export const MeDocument = gql`
-    query Me {
-  me {
-    id
-    posts {
-      id
-      title
-    }
-  }
-}
-    `;
-
-export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
 };
 export const UserPhoneLoginOrregistDocument = gql`
     mutation UserPhoneLoginOrregist($phone: String!, $token: String!) {
@@ -312,4 +302,31 @@ export const UpdatePostsDocument = gql`
 
 export function useUpdatePostsMutation() {
   return Urql.useMutation<UpdatePostsMutation, UpdatePostsMutationVariables>(UpdatePostsDocument);
+};
+export const MeDocument = gql`
+    query Me {
+  me {
+    id
+    posts {
+      id
+      title
+    }
+  }
+}
+    `;
+
+export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
+};
+export const PostsDocument = gql`
+    query Posts {
+  posts {
+    id
+    title
+  }
+}
+    `;
+
+export function usePostsQuery(options: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<PostsQuery>({ query: PostsDocument, ...options });
 };

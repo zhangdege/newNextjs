@@ -1,7 +1,7 @@
 import { Box, Button, Input } from '@chakra-ui/react'
 import { useRouter } from 'next/dist/client/router'
 import React from 'react'
-import { useUserLoginMutation } from '../generated/generat'
+import { useUserLoginMutation } from '../../generated/generat'
 
 interface PassWordLoginProps {}
 

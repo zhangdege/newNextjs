@@ -1,26 +1,29 @@
 import { Box, Button, Input } from '@chakra-ui/react'
 import type { NextPage } from 'next'
+import { useRouter } from 'next/dist/client/router'
 import React, { useRef } from 'react'
-import styles from '../styles/Home.module.css'
 import {
 	useCreatePostsMutation,
 	useDeletePostsMutation,
 	useMeQuery,
+	usePostsQuery,
 	useUpdatePostsMutation,
 	useUserLogOutMutation,
-} from './generated/generat'
+} from '../generated/generat'
+import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
-	const [data, getMe] = useMeQuery()
+	const [data] = useMeQuery()
+	const [dd] = usePostsQuery()
 	const title = useRef(null)
+	const router = useRouter()
 	const newDatas = data.data?.me?.posts
 	const [, sing_out] = useUserLogOutMutation()
 	const [, subPosts] = useCreatePostsMutation()
 	const [, del] = useDeletePostsMutation()
 	const [, updatePosts] = useUpdatePostsMutation()
-	const me = () => {
-		getMe()
-	}
+	// console.log(data)
+
 	const logout = () => {
 		sing_out()
 	}
@@ -50,7 +53,8 @@ const Home: NextPage = () => {
 								ml={15}
 								onClick={() => {
 									const id = posts.id
-									const title: string = prompt('请输入新的title。') || posts.title
+									const title: string =
+										prompt(`现在：${posts.title}，请输入新的内容`) || posts.title
 									updatePosts({ id, title })
 								}}
 							>
@@ -60,7 +64,12 @@ const Home: NextPage = () => {
 					)
 				})}
 			</ul>
-			<Button onClick={me} colorScheme={'blue'}>
+			<Button
+				onClick={() => {
+					router.push('/')
+				}}
+				colorScheme={'blue'}
+			>
 				Me
 			</Button>
 			<Button onClick={logout} ml={15}>
