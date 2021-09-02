@@ -13,11 +13,13 @@ import {
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
-	const [data] = useMeQuery()
-	const [dd] = usePostsQuery()
+	const [meData] = useMeQuery()
+	const [data] = usePostsQuery()
 	const title = useRef(null)
 	const router = useRouter()
-	const newDatas = data.data?.me?.posts
+	console.log()
+
+	const newDatas = data.data?.posts
 	const [, sing_out] = useUserLogOutMutation()
 	const [, subPosts] = useCreatePostsMutation()
 	const [, del] = useDeletePostsMutation()

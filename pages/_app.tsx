@@ -1,10 +1,10 @@
 import { ChakraProvider } from '@chakra-ui/react'
 import { dedupExchange } from '@urql/core'
+import { devtoolsExchange } from '@urql/devtools'
 import { cacheExchange } from '@urql/exchange-graphcache'
 import { withUrqlClient } from 'next-urql'
 import type { AppProps } from 'next/app'
 import { fetchExchange } from 'urql'
-// import { devtoolsExchange } from 'urql-devtools'
 import { graphqlURL } from '../env'
 import '../styles/globals.css'
 import { cacheExchangeConfig } from '../utils/cacheExChangeconfig'
@@ -29,7 +29,7 @@ export default withUrqlClient((ssrExchange) => ({
 	fetchOptions: { credentials: 'include' as const },
 	exchanges: [
 		dedupExchange,
-		// devtoolsExchange,
+		devtoolsExchange,
 		cacheExchange(cacheExchangeConfig),
 		ssrExchange,
 		fetchExchange,
