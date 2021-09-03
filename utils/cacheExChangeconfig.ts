@@ -15,6 +15,8 @@ export const cacheExchangeConfig: CacheExchangeOpts = {
 					{ query: PostsDocument },
 					_result,
 					(result, query) => {
+						// console.log({ result, query })
+
 						const { id, title, __typename } = result.createPost
 						return { posts: [...query.posts, { id, title, __typename }] }
 					}

@@ -28,6 +28,7 @@ export type MongoClass = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  alipay: PayResponse;
   createPost: Post;
   updatePost?: Maybe<Post>;
   deletePost: Scalars['Boolean'];
@@ -36,6 +37,11 @@ export type Mutation = {
   userLogin: UserResponse;
   userPhoneLoginOrregist: UserResponse;
   logout: Scalars['Boolean'];
+};
+
+
+export type MutationAlipayArgs = {
+  amount: Scalars['Float'];
 };
 
 
@@ -75,6 +81,13 @@ export type MutationUserPhoneLoginOrregistArgs = {
   tokenData: PhoneTokenInput;
 };
 
+export type PayResponse = {
+  __typename?: 'PayResponse';
+  outTradeNo: Scalars['String'];
+  qrCode: Scalars['String'];
+  msg: Scalars['String'];
+};
+
 export type PhonePasswordInput = {
   phone: Scalars['String'];
   password: Scalars['String'];
@@ -96,9 +109,17 @@ export type Post = MongoClass & {
 
 export type Query = {
   __typename?: 'Query';
+  Hi: Scalars['String'];
   posts: Array<Post>;
   getAlluser: Array<User>;
   me?: Maybe<User>;
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  NoticeHi: Scalars['String'];
+  paymentNotice: PayResponse;
+  paymentSuccess: Scalars['Boolean'];
 };
 
 export type User = MongoClass & {
@@ -185,6 +206,11 @@ export type PostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type PostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, title: string }> };
+
+export type Unnamed_1_SubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type Unnamed_1_Subscription = { __typename?: 'Subscription', NoticeHi: string };
 
 
 export const CreatePostsDocument = gql`
@@ -329,4 +355,13 @@ export const PostsDocument = gql`
 
 export function usePostsQuery(options: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<PostsQuery>({ query: PostsDocument, ...options });
+};
+export const Document = gql`
+    subscription {
+  NoticeHi
+}
+    `;
+
+export function useSubscription<TData = Subscription>(options: Omit<Urql.UseSubscriptionArgs<SubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandler<Subscription, TData>) {
+  return Urql.useSubscription<Subscription, TData, SubscriptionVariables>({ query: Document, ...options }, handler);
 };
