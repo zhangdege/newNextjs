@@ -7,7 +7,7 @@ const index: React.FC<indexProps> = () => {
 	const [data] = useSubscription()
 	console.log({ data })
 
-	return <div>信息页面</div>
+	return <div>请打开console去查看subscription</div>
 }
 
 export default index

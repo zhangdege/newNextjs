@@ -2,6 +2,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { dedupExchange, subscriptionExchange } from '@urql/core'
 import { devtoolsExchange } from '@urql/devtools'
 import { cacheExchange } from '@urql/exchange-graphcache'
+import { multipartFetchExchange } from '@urql/exchange-multipart-fetch'
 import { withUrqlClient } from 'next-urql'
 import type { AppProps } from 'next/app'
 import { SubscriptionClient } from 'subscriptions-transport-ws'
@@ -33,6 +34,7 @@ export default withUrqlClient((ssrExchange) => ({
 		dedupExchange,
 		devtoolsExchange,
 		cacheExchange(cacheExchangeConfig),
+		multipartFetchExchange,
 		errorExchange({
 			onError(error) {
 				console.error(error)

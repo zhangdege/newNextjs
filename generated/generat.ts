@@ -12,6 +12,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any;
 };
 
 export type FieldError = {
@@ -32,6 +34,7 @@ export type Mutation = {
   createPost: Post;
   updatePost?: Maybe<Post>;
   deletePost: Scalars['Boolean'];
+  addPictureFile: Scalars['Boolean'];
   sendToken: UserResponse;
   createUser: User;
   userLogin: UserResponse;
@@ -58,6 +61,11 @@ export type MutationUpdatePostArgs = {
 
 export type MutationDeletePostArgs = {
   id: Scalars['String'];
+};
+
+
+export type MutationAddPictureFileArgs = {
+  picture: Scalars['Upload'];
 };
 
 
@@ -113,6 +121,7 @@ export type Query = {
   posts: Array<Post>;
   getAlluser: Array<User>;
   me?: Maybe<User>;
+  useruses: Array<User>;
 };
 
 export type Subscription = {
@@ -121,6 +130,7 @@ export type Subscription = {
   paymentNotice: PayResponse;
   paymentSuccess: Scalars['Boolean'];
 };
+
 
 export type User = MongoClass & {
   __typename?: 'User';
@@ -138,6 +148,13 @@ export type UserResponse = {
   errors?: Maybe<Array<FieldError>>;
   user?: Maybe<User>;
 };
+
+export type AddpictureFileMutationVariables = Exact<{
+  picture: Scalars['Upload'];
+}>;
+
+
+export type AddpictureFileMutation = { __typename?: 'Mutation', addPictureFile: boolean };
 
 export type CreatePostsMutationVariables = Exact<{
   title: Scalars['String'];
@@ -213,6 +230,15 @@ export type Unnamed_1_SubscriptionVariables = Exact<{ [key: string]: never; }>;
 export type Unnamed_1_Subscription = { __typename?: 'Subscription', NoticeHi: string };
 
 
+export const AddpictureFileDocument = gql`
+    mutation AddpictureFile($picture: Upload!) {
+  addPictureFile(picture: $picture)
+}
+    `;
+
+export function useAddpictureFileMutation() {
+  return Urql.useMutation<AddpictureFileMutation, AddpictureFileMutationVariables>(AddpictureFileDocument);
+};
 export const CreatePostsDocument = gql`
     mutation CreatePosts($title: String!) {
   createPost(title: $title) {
