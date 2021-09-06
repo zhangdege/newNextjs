@@ -8,8 +8,6 @@ export const FronEnderrorExchange: Exchange =
 		return pipe(
 			forward(ops$),
 			tap(({ error }) => {
-				console.log(error)
-
 				if (error?.message.includes('not authenticated')) {
 					Router.replace('/login')
 				}

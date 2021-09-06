@@ -4,21 +4,31 @@ import React from 'react'
 import {
 	useDeletePostsMutation,
 	useMeQuery,
+	usePostsQuery,
 	useUpdatePostsMutation,
 } from '../../generated/generat'
 
 interface indexProps {}
 
 const index: React.FC<indexProps> = () => {
-	const [{ data }] = useMeQuery()
+	const [{ data }] = usePostsQuery()
+	const [{ data: medata }] = useMeQuery()
+
 	const router = useRouter()
 	const [, del] = useDeletePostsMutation()
 	const [, updatePosts] = useUpdatePostsMutation()
+	if (!data && !medata) {
+		return <div>wating...</div>
+	}
+	const mePosts = data?.posts.filter((po) => {
+		return po.creator.id === medata?.me?.id
+	})
+	console.log('ssss', mePosts)
 	return (
 		<div>
 			我的数据:
 			<ul>
-				{data?.me?.posts.map((posts) => {
+				{mePosts?.map((posts) => {
 					return (
 						<li key={posts.id}>
 							id:{posts.id}-------------------------------------------title:

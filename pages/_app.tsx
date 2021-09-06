@@ -34,13 +34,14 @@ export default withUrqlClient((ssrExchange) => ({
 		dedupExchange,
 		devtoolsExchange,
 		cacheExchange(cacheExchangeConfig),
+		FronEnderrorExchange,
 		multipartFetchExchange,
 		errorExchange({
 			onError(error) {
 				console.error(error)
 			},
 		}),
-		FronEnderrorExchange,
+
 		ssrExchange,
 		subscriptionExchange({
 			//@ts-ignore

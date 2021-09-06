@@ -4,9 +4,7 @@ import { useRouter } from 'next/dist/client/router'
 import React, { useRef } from 'react'
 import {
 	useCreatePostsMutation,
-	useDeletePostsMutation,
 	usePostsQuery,
-	useUpdatePostsMutation,
 	useUserLogOutMutation,
 } from '../generated/generat'
 import styles from '../styles/Home.module.css'
@@ -18,9 +16,6 @@ const Home: NextPage = () => {
 	const newDatas = data.data?.posts
 	const [, sing_out] = useUserLogOutMutation()
 	const [, subPosts] = useCreatePostsMutation()
-	const [, del] = useDeletePostsMutation()
-	const [, updatePosts] = useUpdatePostsMutation()
-	// console.log(data)
 
 	const logout = () => {
 		sing_out()

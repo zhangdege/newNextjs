@@ -30,6 +30,8 @@ export type MongoClass = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createExcelFiles: Scalars['Boolean'];
+  addExcelFile: Scalars['Boolean'];
   alipay: PayResponse;
   createPost: Post;
   updatePost?: Maybe<Post>;
@@ -40,6 +42,16 @@ export type Mutation = {
   userLogin: UserResponse;
   userPhoneLoginOrregist: UserResponse;
   logout: Scalars['Boolean'];
+};
+
+
+export type MutationCreateExcelFilesArgs = {
+  groupInfo: Array<Scalars['String']>;
+};
+
+
+export type MutationAddExcelFileArgs = {
+  Excel: Scalars['Upload'];
 };
 
 
@@ -149,6 +161,13 @@ export type UserResponse = {
   user?: Maybe<User>;
 };
 
+export type AddExcelFileMutationVariables = Exact<{
+  Excel: Scalars['Upload'];
+}>;
+
+
+export type AddExcelFileMutation = { __typename?: 'Mutation', addExcelFile: boolean };
+
 export type AddpictureFileMutationVariables = Exact<{
   picture: Scalars['Upload'];
 }>;
@@ -222,7 +241,7 @@ export type MeQuery = { __typename?: 'Query', me?: Maybe<{ __typename?: 'User', 
 export type PostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, title: string }> };
+export type PostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, title: string, creator: { __typename?: 'User', id: string } }> };
 
 export type Unnamed_1_SubscriptionVariables = Exact<{ [key: string]: never; }>;
 
@@ -230,6 +249,15 @@ export type Unnamed_1_SubscriptionVariables = Exact<{ [key: string]: never; }>;
 export type Unnamed_1_Subscription = { __typename?: 'Subscription', NoticeHi: string };
 
 
+export const AddExcelFileDocument = gql`
+    mutation AddExcelFile($Excel: Upload!) {
+  addExcelFile(Excel: $Excel)
+}
+    `;
+
+export function useAddExcelFileMutation() {
+  return Urql.useMutation<AddExcelFileMutation, AddExcelFileMutationVariables>(AddExcelFileDocument);
+};
 export const AddpictureFileDocument = gql`
     mutation AddpictureFile($picture: Upload!) {
   addPictureFile(picture: $picture)
@@ -375,6 +403,9 @@ export const PostsDocument = gql`
   posts {
     id
     title
+    creator {
+      id
+    }
   }
 }
     `;

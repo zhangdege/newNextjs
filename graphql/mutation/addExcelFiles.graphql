@@ -1,0 +1,3 @@
+mutation AddExcelFile($Excel: Upload!) {
+	addExcelFile(Excel: $Excel)
+}
