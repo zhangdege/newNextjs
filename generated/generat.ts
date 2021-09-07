@@ -22,6 +22,27 @@ export type FieldError = {
   message: Scalars['String'];
 };
 
+export type FieldInfoType = {
+  __typename?: 'FieldInfoType';
+  symbol?: Maybe<Scalars['String']>;
+  primaryExchange: Scalars['String'];
+  sector: Scalars['String'];
+  calculationPrice: Scalars['String'];
+  latestPrice: Scalars['String'];
+  latestSource: Scalars['String'];
+  latestUpdate: Scalars['String'];
+  latestVolume: Scalars['String'];
+  bidPrice: Scalars['String'];
+  bidSize: Scalars['String'];
+  askPrice: Scalars['String'];
+  askSize: Scalars['String'];
+  high: Scalars['String'];
+  low: Scalars['String'];
+  previousClose: Scalars['String'];
+  change: Scalars['String'];
+  changePercent: Scalars['String'];
+};
+
 export type MongoClass = {
   id: Scalars['String'];
   createdAt: Scalars['String'];
@@ -30,13 +51,14 @@ export type MongoClass = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createExcelFiles: Scalars['Boolean'];
+  createExcelFiles: Scalars['String'];
   addExcelFile: Scalars['Boolean'];
   alipay: PayResponse;
   createPost: Post;
   updatePost?: Maybe<Post>;
   deletePost: Scalars['Boolean'];
   addPictureFile: Scalars['Boolean'];
+  addManyPictureFile: Scalars['Boolean'];
   sendToken: UserResponse;
   createUser: User;
   userLogin: UserResponse;
@@ -78,6 +100,11 @@ export type MutationDeletePostArgs = {
 
 export type MutationAddPictureFileArgs = {
   picture: Scalars['Upload'];
+};
+
+
+export type MutationAddManyPictureFileArgs = {
+  picture: Array<Scalars['Upload']>;
 };
 
 
@@ -129,7 +156,8 @@ export type Post = MongoClass & {
 
 export type Query = {
   __typename?: 'Query';
-  Hi: Scalars['String'];
+  toGetInfo: Scalars['String'];
+  Hi: Output;
   posts: Array<Post>;
   getAlluser: Array<User>;
   me?: Maybe<User>;
@@ -138,7 +166,8 @@ export type Query = {
 
 export type Subscription = {
   __typename?: 'Subscription';
-  NoticeHi: Scalars['String'];
+  btcInfo: FieldInfoType;
+  NoticeHi: Output;
   paymentNotice: PayResponse;
   paymentSuccess: Scalars['Boolean'];
 };
@@ -161,6 +190,11 @@ export type UserResponse = {
   user?: Maybe<User>;
 };
 
+export type Output = {
+  __typename?: 'output';
+  message: Scalars['String'];
+};
+
 export type AddExcelFileMutationVariables = Exact<{
   Excel: Scalars['Upload'];
 }>;
@@ -168,12 +202,19 @@ export type AddExcelFileMutationVariables = Exact<{
 
 export type AddExcelFileMutation = { __typename?: 'Mutation', addExcelFile: boolean };
 
-export type AddpictureFileMutationVariables = Exact<{
+export type AddManyPictureFileMutationVariables = Exact<{
+  picture: Array<Scalars['Upload']> | Scalars['Upload'];
+}>;
+
+
+export type AddManyPictureFileMutation = { __typename?: 'Mutation', addManyPictureFile: boolean };
+
+export type AddPictureFileMutationVariables = Exact<{
   picture: Scalars['Upload'];
 }>;
 
 
-export type AddpictureFileMutation = { __typename?: 'Mutation', addPictureFile: boolean };
+export type AddPictureFileMutation = { __typename?: 'Mutation', addPictureFile: boolean };
 
 export type CreatePostsMutationVariables = Exact<{
   title: Scalars['String'];
@@ -243,11 +284,6 @@ export type PostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type PostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, title: string, creator: { __typename?: 'User', id: string } }> };
 
-export type Unnamed_1_SubscriptionVariables = Exact<{ [key: string]: never; }>;
-
-
-export type Unnamed_1_Subscription = { __typename?: 'Subscription', NoticeHi: string };
-
 
 export const AddExcelFileDocument = gql`
     mutation AddExcelFile($Excel: Upload!) {
@@ -258,14 +294,23 @@ export const AddExcelFileDocument = gql`
 export function useAddExcelFileMutation() {
   return Urql.useMutation<AddExcelFileMutation, AddExcelFileMutationVariables>(AddExcelFileDocument);
 };
-export const AddpictureFileDocument = gql`
-    mutation AddpictureFile($picture: Upload!) {
+export const AddManyPictureFileDocument = gql`
+    mutation AddManyPictureFile($picture: [Upload!]!) {
+  addManyPictureFile(picture: $picture)
+}
+    `;
+
+export function useAddManyPictureFileMutation() {
+  return Urql.useMutation<AddManyPictureFileMutation, AddManyPictureFileMutationVariables>(AddManyPictureFileDocument);
+};
+export const AddPictureFileDocument = gql`
+    mutation AddPictureFile($picture: Upload!) {
   addPictureFile(picture: $picture)
 }
     `;
 
-export function useAddpictureFileMutation() {
-  return Urql.useMutation<AddpictureFileMutation, AddpictureFileMutationVariables>(AddpictureFileDocument);
+export function useAddPictureFileMutation() {
+  return Urql.useMutation<AddPictureFileMutation, AddPictureFileMutationVariables>(AddPictureFileDocument);
 };
 export const CreatePostsDocument = gql`
     mutation CreatePosts($title: String!) {
@@ -412,13 +457,4 @@ export const PostsDocument = gql`
 
 export function usePostsQuery(options: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<PostsQuery>({ query: PostsDocument, ...options });
-};
-export const Document = gql`
-    subscription {
-  NoticeHi
-}
-    `;
-
-export function useSubscription<TData = Subscription>(options: Omit<Urql.UseSubscriptionArgs<SubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandler<Subscription, TData>) {
-  return Urql.useSubscription<Subscription, TData, SubscriptionVariables>({ query: Document, ...options }, handler);
 };
